@@ -1,8 +1,11 @@
 const request=require('request')
+require('dotenv').config()
 const fs=require('fs')
 print=console.log
+const API_KEY=process.env.oneWeatherKey
+console.log(API_KEY)
 const urlparser=(lat,long)=>{
-    return('https://api.openweathermap.org/data/2.5/onecall?lat=' +lat+ '&lon=' +long+ '&appid=c1215bb9b3ea50fe35b4ae9d2444edfa&exclude=current,minutely,daily,alerts&units=metric')
+    return('https://api.openweathermap.org/data/2.5/onecall?lat=' +lat+ '&lon=' +long+ '&appid='+API_KEY+'&exclude=current,minutely,daily,alerts&units=metric')
 }
 
 const forecast=(lat,long,callback)=>{
