@@ -3,7 +3,6 @@ require('dotenv').config()
 const fs=require('fs')
 print=console.log
 const API_KEY=process.env.oneWeatherKey
-console.log(API_KEY)
 const urlparser=(lat,long)=>{
     return('https://api.openweathermap.org/data/2.5/onecall?lat=' +lat+ '&lon=' +long+ '&appid='+API_KEY+'&exclude=current,minutely,daily,alerts&units=metric')
 }
