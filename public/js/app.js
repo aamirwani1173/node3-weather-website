@@ -20,15 +20,17 @@ weatherForm.addEventListener('submit',(e)=>{
         response.json().then((data)=>{
 
 
-            if(data.errorMsg!==undefined){
-                messageOne.textContent=data.errorMsg
+            if(data.error){
+                messageOne.textContent=data.error
+                // console.log(data.error)
                 
            }else{
                    // placeName=
-                //    forecastString=
-                   messageOne.textContent=data.place
-                   messageTwo.textContent='Temp at your place is '+data.forecast.temp+'. And the description is '+ data.forecast.weather[0].main
+                
+                   messageOne.textContent=data.cityName
+                   messageTwo.textContent='Temp:'+data.temp+' Max Temp:'+data.maxTemp+' Humidity:'+data.humidity
                    // messageTwo.textContent='hello
+                //    console.log(data.cityName)
            }
 
            })

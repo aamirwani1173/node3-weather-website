@@ -1,26 +1,37 @@
 const request=require('request')
 require('dotenv').config()
 const fs=require('fs')
-print=console.log
-const API_KEY_FORECAST=process.env.oneWeatherKey
-const urlparser=(lat,long)=>{
-    return('https://api.openweathermap.org/data/2.5/onecall?lat=' +lat+ '&lon=' +long+ '&appid='+API_KEY_FORECAST+'&exclude=current,minutely,daily,alerts&units=metric')
+// print=console.log
+const API_KEY_FORECAST=process.env['forecastKey']
+console.log(process.env["forecastKey"])
+const urlparser=(location)=>{
+    return('https://api.openweathermap.org/data/2.5/weather?q='+location+'&appid='+API_KEY_FORECAST+'&units=metric')
 }
 
-const forecast=(lat,long,callback)=>{
-    const url=urlparser(lat,long)
+const forecast=(location,callback)=>{
+    const url=urlparser(location)
 
-    request({url,'json':true},(response,error,body)=>{
-        if(body===undefined){
-            callback('unable to connect',undefined)
-        }else if(body.cod==='400'){
-            callback('Wrong coordinates',undefined)
+    request({url,'json':true},(error,response)=>{
+
+        if(error){
+            return callback({error:'cant connect to location services'})
         }
-        else{
-            // data=JSON.stringify(body.hourly[0],null,' ')
-            
-            callback(undefined,body.hourly[0])
+
+
+        else if(response.statusCode==404){
+            return callback({error:'cant find location'})
         }
+
+
+        // callback(response)
+        result=response.body
+        const cityName=result.name
+        const temp=result.main.temp
+        const maxTemp=result.main.temp_max
+        const humidity=result.main.humidity
+        const description=result.weather[0].main
+
+        callback({cityName,temp,maxTemp,humidity,description})
     })
 }
 

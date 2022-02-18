@@ -2,7 +2,7 @@ const hbs=require('hbs')
 const path=require('path')
 const { response } = require('express')
 const express=require('express')
-const geocode=require('./utils/geocode')
+// const geocode=require('./utils/geocode')
 const forecast=require('./utils/forecast')
 const port=process.env.PORT || 3000
 
@@ -41,35 +41,12 @@ app.get('/weather',(req,res)=>{
             error:"location cant be empty"
         })
     }
-    geocode(location,(error,{lat,long,placeName}={})=>{
-
-
-        if (error){
-            return res.send({error })
-        }
-
-
-        forecast(lat,long,(error,data)=>{
-
-
-            if (error){
-                return res.send({
-                error,
-                place:undefined,
-                forecast:undefined
-                })
-            }
-
-            res.send({
-                error:undefined,
-                place:placeName,
-                forecast:data
-            })
-
-        })
+    forecast(location,(response)=>{
+        res.send(response)
+    })
 
     })
-})
+
 app.get('/about',(req,res)=>{
     res.render('about')
 })

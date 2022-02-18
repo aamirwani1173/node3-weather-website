@@ -13,9 +13,9 @@ const geocode=(address,callback)=>{
         if(error){
             callback('unable to connect to location services',undefined)
         }
-        else if(body.body.features.length===0){
-            callback('Unable to find the location.Try another one',undefined)
-        }
+        // else if(body.body.features.length===0){
+        //     callback('Unable to find the location.Try another one',undefined)
+        // }
         else{
             const data={'lat':body.body.features[0].center[1],'long':body.body.features[0].center[0],'placeName':body.body.features[0].place_name}
             callback(undefined,data)
